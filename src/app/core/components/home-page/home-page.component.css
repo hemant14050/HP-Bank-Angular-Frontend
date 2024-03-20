@@ -1,0 +1,14 @@
+.home-section {
+    width: 100%;
+    text-align: center;
+}
+
+.img-fluid {
+    width: 40%;
+}
+
+.greet-msg {
+    font-weight: bold;
+    font-size: 2rem;
+    margin-top: 5px;
+}

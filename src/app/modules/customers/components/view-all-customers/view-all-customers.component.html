@@ -1,0 +1,51 @@
+<!-- customer-table.component.html -->
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div *ngIf="!isLoading && customersList" class="tbl-container">
+  <h2>Customers Data</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th *ngFor="let tblTitle of custTableTitles" class="nowrap">
+            {{ tblTitle }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customersList">
+          <td class="nowrap btn-row-container">
+            <app-my-button (btnClick)="editCustomer(customer.customerId)"> Edit </app-my-button>
+            <app-my-button
+              extraClasses="delete-btn"
+              (btnClick)="deleteCustomerById(customer.customerId)"
+            >
+              Delete
+            </app-my-button>
+          </td>
+          <td class="nowrap">{{ customer.customerId }}</td>
+          <td class="nowrap">
+            {{ customer.firstName }} {{ customer.lastName }}
+          </td>
+          <td class="nowrap">{{ customer.email }}</td>
+          <td class="nowrap">{{ customer.mobileNo }}</td>
+          <td class="nowrap">{{ customer.addharNo }}</td>
+          <td class="nowrap">{{ customer.panNo }}</td>
+          <td class="nowrap">
+            {{ customer.dob | dateFormatter : "dd-MM-yyyy" }}
+          </td>
+          <td class="nowrap">{{ customer.street }}</td>
+          <td class="nowrap">{{ customer.city }}</td>
+          <td class="nowrap">{{ customer.custState }}</td>
+          <td class="nowrap">{{ customer.zip }}</td>
+          <td class="nowrap">{{ customer.accountNo }}</td>
+          <td class="nowrap">{{ customer.accountTypeId | accountType }}</td>
+          <td class="nowrap">{{ customer.balance | currency:"INR" }}</td>
+          <td class="nowrap">{{ customer.isActive ? "Yes" : "No" }}</td>
+          <td class="nowrap">
+            {{ customer.createdAt | dateFormatter : "dd-MM-yyyy" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

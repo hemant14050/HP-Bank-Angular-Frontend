@@ -1,0 +1,24 @@
+<form
+  class="row g-3 needs-validation border p-3 mt-3 pt-0 mx-1"
+>
+    <div class="form-heading">
+      Transactions Form:
+    </div>
+    <div class="col-md-4">
+      <label for="accountNo">Account No: </label>
+      <input type="number" class="form-control {{!accountNo && submitBtnClicked && 'ng-invalid ng-touched'}}" id="accountNo" placeholder="Enter account no." [(ngModel)]="accountNo" name="accountNo" />
+      <small class="text-danger" *ngIf="!accountNo && submitBtnClicked">
+        This field is required.
+      </small>
+    </div>
+
+    <!-- Custom button component -->
+    <app-my-button btnType="button" (btnClick)="onSubmitHandler()" extraClasses="actionBtn" [disabled]="isLoading">
+        <span>Get Transactions</span>
+        <app-small-spinner *ngIf="isLoading"></app-small-spinner>
+    </app-my-button>
+</form>
+
+<app-transactions-tbl [isLoading]="isLoading" [transactionsList]="transactionsList"></app-transactions-tbl>
+
+<app-my-modal [modalTitle]="modalTitle" [modalMessage]="modalMessage"></app-my-modal>

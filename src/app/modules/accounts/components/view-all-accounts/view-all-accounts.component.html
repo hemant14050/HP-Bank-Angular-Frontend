@@ -1,0 +1,31 @@
+<!-- customer-table.component.html -->
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div *ngIf="!isLoading && accountsList && accountsList.length > 0" class="tbl-container">
+  <h2>Accounts Data</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th *ngFor="let tblTitle of accountTableTitles" class="nowrap">
+            {{ tblTitle }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let account of accountsList">
+          <td class="nowrap">{{ account.accountNo }}</td>
+          <td class="nowrap">{{ account.customerId }}</td>
+          <td class="nowrap">{{ account.accountTypeId | accountType }}</td>
+          <td class="nowrap">{{ account.balance | currency:"INR" }}</td>
+          <td class="nowrap">{{ account.isActive? "Yes":"No" }}</td>
+          <td class="nowrap">
+            <app-my-button (btnClick)="statusChangeHandler(account.accountNo)" extraClasses="{{account.isActive? 'delete-btn':''}}">
+              {{ account.isActive? "Deactivate":"Activate" }}
+            </app-my-button>
+          </td>
+          <td class="nowrap">{{ account.createdAt | dateFormatter:"dd-MM-yyyy" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

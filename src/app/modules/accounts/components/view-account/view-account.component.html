@@ -1,0 +1,109 @@
+<form
+  class="row g-3 needs-validation border p-3 mt-3 pt-0 mx-1"
+>
+    <div class="form-heading">
+        Search by Account No. Form:
+    </div>
+    <div class="col-md-4">
+      <label for="accountNo">Account No: </label>
+      <input type="string" class="form-control {{!accountNo && submitBtnClicked && 'ng-invalid ng-touched'}}" id="aadharNo" placeholder="Enter account no." [(ngModel)]="accountNo" name="aadharNo" />
+      <small class="text-danger" *ngIf="!accountNo && submitBtnClicked">
+        This field is required.
+      </small>
+    </div>
+
+    <!-- Custom button component -->
+    <app-my-button btnType="button" (btnClick)="searchByAccountNo()" extraClasses="actionBtn" [disabled]="isLoading">
+        <span>
+            Search
+        </span>
+        <app-small-spinner *ngIf="isLoading"></app-small-spinner>
+    </app-my-button>
+</form>
+
+<div *ngIf="!isLoading && currCustomerData" class="row g-3 p-3 mt-3 pt-0 mx-1 border mb-4">
+    <div class="form-heading">
+      Customer Details:
+    </div>
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="firstName">First name: </label>
+      <p>{{ currCustomerData.firstName }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="lastname">Last name: </label>
+      <p>{{ currCustomerData.lastName }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="email">Email Id: </label>
+      <p>{{ currCustomerData.email }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="mobileNo">Mobile no: </label>
+      <p>{{ currCustomerData.mobileNo }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" >Addhar No: </label>
+      <p>{{ currCustomerData.addharNo }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="panNo">PAN: </label>
+      <p>{{ currCustomerData.panNo }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="dob">Date of Birth: </label>
+      <p>{{ currCustomerData.dob | dateFormatter: "yyyy-MM-dd" }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="street">Street: </label>
+      <p>{{ currCustomerData.street }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="city">City: </label>
+      <p>{{ currCustomerData.city }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="custState">State: </label>
+      <p>{{ currCustomerData.custState }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="zip">Zip code: </label>
+      <p>{{ currCustomerData.zip }}</p>
+    </div>
+  
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="accountTypeId">Account type: </label>
+      <p>{{ currCustomerData.accountTypeId | accountType }}</p>
+    </div>
+    
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="accNo">Account No: </label>
+      <p>{{ currCustomerData.accountNo }}</p>
+    </div>
+
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="accBalance">Account Balance: </label>
+      <p>{{ currCustomerData.balance | currency:"INR" }}</p>
+    </div>
+
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="status">Account status: </label>
+      <p>{{ currCustomerData.isActive? "Yes":"No" }}</p>
+    </div>
+
+    <div class="col-md-4">
+      <label class="font-weight-bold" for="action">Action: </label>
+      <app-my-button (btnClick)="statusChangeHandler(currCustomerData.accountNo)" extraClasses="{{currCustomerData.isActive? 'delete-btn':''}}">
+        {{ currCustomerData.isActive? "Deactivate":"Activate" }}
+      </app-my-button>
+    </div>
+</div>

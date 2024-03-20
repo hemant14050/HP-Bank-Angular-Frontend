@@ -1,0 +1,24 @@
+<div *ngIf="!isLoading && transactionsList && transactionsList.length > 0" class="tbl-container">
+  <h2>Transactions Data</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th *ngFor="let tblTitle of transactionsTableTitles" class="nowrap">
+            {{ tblTitle }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactionsList">
+          <td class="nowrap">{{ transaction.transactionId }}</td>
+          <td class="nowrap">{{ transaction.accountNo }}</td>
+          <td class="nowrap {{transaction.transactionType === 'Deposit'? 'green-col':'red-col'}}">{{ transaction.transactionType }}</td>
+          <td class="nowrap {{transaction.transactionType === 'Deposit'? 'green-col':'red-col'}}" > {{ transaction.amount | currency:"INR" }}</td>
+          <td class="nowrap">{{ transaction.closingAmt | currency:"INR" }}</td>
+          <td class="nowrap">{{ transaction.createdAt | dateFormatter:"dd-MM-yyyy" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

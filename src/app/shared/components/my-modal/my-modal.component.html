@@ -1,0 +1,18 @@
+<ng-template #demoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        {{modalTitle}}
+      </h4>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            {{modalMessage}}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <app-my-button (btnClick)="modal.close('Save click')">
+            Close
+        </app-my-button>
+    </div>
+  </ng-template>

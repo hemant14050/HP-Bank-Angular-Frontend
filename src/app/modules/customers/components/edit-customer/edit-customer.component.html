@@ -1,0 +1,3 @@
+<app-customer-form *ngIf="currCustomerData" formTitle="Edit customer form" [customerFormData]="currCustomerData" [isLoading]="isLoading" formType="edit" (formSubmit)="handleSubmit($event)">
+</app-customer-form>
+<app-my-modal [modalTitle]="modalTitle" [modalMessage]="modalMessage"></app-my-modal>

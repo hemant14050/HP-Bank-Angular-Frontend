@@ -1,0 +1,34 @@
+<form
+  (ngSubmit)="submitHandler()"
+  class="row g-3 needs-validation border p-3 mt-3 pt-0 mx-1"
+>
+    <div class="form-heading">
+      Interest Rate Form
+    </div>
+
+    <div class="col-md-4">
+        <label for="accountTypeId">Account type: </label>
+        <select class="form-control" name ="accountTypeId" id="accountTypeId" [(ngModel)]="accountTypeId">
+            <option value="0" selected disabled>---SELECT---</option>
+            <option value="1">Saving</option>
+            <option value="2">Current</option>
+        </select>
+    </div>
+
+    <!-- Custom button component -->
+    <app-my-button btnType="submit" extraClasses="actionBtn" [disabled]="isLoading">
+        <span>Get Interest Rate</span>
+        <app-small-spinner *ngIf="isLoading"></app-small-spinner>
+    </app-my-button>
+
+    <div class="col-md-4" *ngIf="interestRate">
+        <div class="d-flex gap-2">
+          <div>Account Type: </div>
+          <div>{{interestRate.accountTypeId | accountType}}</div>
+        </div>
+        <div class="d-flex gap-2">
+          <div>Interest Rate: </div>
+          <div>{{interestRate.interestRate * 100}}%</div>
+        </div>
+    </div>
+</form>

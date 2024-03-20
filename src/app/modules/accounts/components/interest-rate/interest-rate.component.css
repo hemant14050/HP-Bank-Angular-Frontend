@@ -1,0 +1,9 @@
+select.ng-invalid.ng-touched, input.ng-invalid.ng-touched {
+    border: red 1px solid;
+}
+
+.form-heading {
+    font-weight: bold;
+    font-size: large;
+    /* border-bottom: 1px #1A6E90 solid; */
+}

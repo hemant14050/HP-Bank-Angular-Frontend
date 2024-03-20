@@ -1,0 +1,54 @@
+<!-- app.component.html -->
+<div class="main-container">
+    <nav class="main-nav">
+        <div class="navbar">
+            <div class="b-name">
+                <a class="nav-link" routerLink="/">HP Bank Of India</a>
+            </div>
+
+            <!-- if use is not logged in -->
+            <div class="nav-bar-list" *ngIf="!isLoggedIn()">
+                <app-nav-link-button routerLink="/login" routerLinkActive="active-nav">
+                    Login
+                </app-nav-link-button>
+            </div>
+            
+            <!-- if use is logged in -->
+            <div class="nav-bar-list" *ngIf="isLoggedIn()">
+               <li class="nav-item">
+                <app-nav-link-button routerLink="/home" routerLinkActive="active-nav" [routerLinkActiveOptions]="{exact:true}">
+                    Home
+                </app-nav-link-button>
+               </li>
+               <li class="nav-item">
+                <app-nav-link-button routerLink="/customers" routerLinkActive="active-nav">
+                    Customers
+                </app-nav-link-button>
+               </li>
+               <li class="nav-item">
+                <app-nav-link-button routerLink="/accounts" routerLinkActive="active-nav">
+                    Accounts
+                </app-nav-link-button>
+               </li>
+               <li class="nav-item">
+                <app-nav-link-button routerLink="/transactions" routerLinkActive="active-nav">
+                    Transactions
+                </app-nav-link-button>
+               </li> 
+
+               <li class="nav-item">
+                    <app-my-button btnType="button" extraClasses="delete-btn" (btnClick)="logout()" >
+                        Logout
+                    </app-my-button>
+               </li>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="max-width-container">
+        <div class="section-container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+  

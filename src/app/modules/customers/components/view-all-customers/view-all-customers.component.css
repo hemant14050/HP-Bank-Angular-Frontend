@@ -1,0 +1,10 @@
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-row-container {
+  display: flex;
+  gap: 4px;
+}

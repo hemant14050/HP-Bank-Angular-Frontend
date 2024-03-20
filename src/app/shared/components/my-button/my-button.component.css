@@ -1,0 +1,12 @@
+.actionBtn {
+  background-color: #1A6E90;
+  color: white;
+  padding: 3px 10px;
+  border: none;
+  display: flex;
+  gap: 4px;
+}
+
+.delete-btn {
+  background-color: rgb(194, 64, 64);
+}

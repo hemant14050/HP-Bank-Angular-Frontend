@@ -1,0 +1,187 @@
+<form
+  [formGroup]="customerForm"
+  (ngSubmit)="onSubmit()"
+  class="row g-3 needs-validation border p-3 mt-3 pt-0 mx-1"
+>
+    <div class="form-heading">
+      {{formTitle}}
+    </div>
+    <div class="col-md-4">
+      <label for="firstName">First name: </label>
+      <input type="text" class="form-control" id="firstName" placeholder="Enter first name" formControlName ="firstName"/>
+      <small class="text-danger" *ngIf="customerForm.controls['firstName'].invalid && customerForm.controls['firstName'].touched">
+        <span *ngIf="customerForm.controls['firstName'].errors?.['required']">
+            This is required.
+        </span>
+      </small>
+    </div>
+    
+    <div class="col-md-4">
+        <label for="lastname">Last name: </label>
+        <input type="text" class="form-control" id="lastname" placeholder="Enter last name" formControlName ="lastName"/>
+        <small class="text-danger" *ngIf="customerForm.controls['lastName'].invalid && customerForm.controls['lastName'].touched">
+          <span *ngIf="customerForm.controls['lastName'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="email">Email Id: </label>
+        <input type="text" class="form-control" id="email" placeholder="Enter email id" formControlName ="email"/>
+        <small class="text-danger" *ngIf="customerForm.controls['email'].invalid && customerForm.controls['email'].touched">
+          <span *ngIf="customerForm.controls['email'].errors?.['required']">
+              This is required.
+          </span>
+          <span *ngIf="customerForm.controls['email'].errors?.['email']">
+            Enter valid email id
+        </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="mobileNo">Mobile no: </label>
+        <input type="text" class="form-control" id="mobileNo" placeholder="Enter mobile no" formControlName ="mobileNo"/>
+        <small class="text-danger" *ngIf="customerForm.controls['mobileNo'].invalid && customerForm.controls['mobileNo'].touched">
+          <span *ngIf="customerForm.controls['mobileNo'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="addharNo">Addhar No: </label>
+        <input type="text" class="form-control" id="addharNo" placeholder="Enter addhar no" formControlName ="addharNo"/>
+        <small class="text-danger" *ngIf="customerForm.controls['addharNo'].invalid && customerForm.controls['addharNo'].touched">
+          <span *ngIf="customerForm.controls['addharNo'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="panNo">PAN: </label>
+        <input type="text" class="form-control" id="panNo" placeholder="Enter PAN" formControlName ="panNo"/>
+        <small class="text-danger" *ngIf="customerForm.controls['panNo'].invalid && customerForm.controls['panNo'].touched">
+          <span *ngIf="customerForm.controls['panNo'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="dob">Date of Birth: </label>
+        <input type="date" class="form-control" id="dob" formControlName ="dob"/>
+        <small class="text-danger" *ngIf="customerForm.controls['dob'].invalid && customerForm.controls['dob'].touched">
+          <span *ngIf="customerForm.controls['dob'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="street">Street: </label>
+        <input type="text" class="form-control" id="street" placeholder="Enter street" formControlName ="street"/>
+        <small class="text-danger" *ngIf="customerForm.controls['street'].invalid && customerForm.controls['street'].touched">
+          <span *ngIf="customerForm.controls['street'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="city">City: </label>
+        <input type="text" class="form-control" id="city" placeholder="Enter city" formControlName ="city"/>
+        <small class="text-danger" *ngIf="customerForm.controls['city'].invalid && customerForm.controls['city'].touched">
+          <span *ngIf="customerForm.controls['city'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="custState">State: </label>
+        <input type="text" class="form-control" id="custState" placeholder="Enter state" formControlName ="custState"/>
+        <small class="text-danger" *ngIf="customerForm.controls['custState'].invalid && customerForm.controls['custState'].touched">
+          <span *ngIf="customerForm.controls['custState'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="zip">Zip code: </label>
+        <input type="text" class="form-control" id="zip" placeholder="Enter street" formControlName ="zip"/>
+        <small class="text-danger" *ngIf="customerForm.controls['zip'].invalid && customerForm.controls['zip'].touched">
+          <span *ngIf="customerForm.controls['zip'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="accountTypeId">Account type: </label>
+        <select *ngIf="formType === 'add'" class="form-control" formControlName ="accountTypeId" id="accountTypeId">
+            <option value="" selected disabled>---SELECT---</option>
+            <option value="1">Saving</option>
+            <option value="2">Current</option>
+        </select>
+        <small class="text-danger" *ngIf="formType === 'add' && customerForm.controls['accountTypeId'].invalid && customerForm.controls['accountTypeId'].touched">
+          <span *ngIf="customerForm.controls['accountTypeId'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+        <select *ngIf="formType !== 'add'" disabled="true" class="form-control" id="accountTypeId">
+          <option [value]="customerFormData.accountTypeId" selected>{{customerFormData.accountTypeId | accountType}}</option>>
+      </select>
+    </div>
+
+    <div class="col-md-4" *ngIf="formType === 'add'">
+        <label for="openingBalance">Account Opening Balance: </label>
+        <input type="number" class="form-control" id="openingBalance" placeholder="Enter opening balance" formControlName ="openingBalance"/>
+        <small class="text-danger" *ngIf="customerForm.controls['openingBalance'].invalid && customerForm.controls['openingBalance'].touched">
+          <span *ngIf="customerForm.controls['openingBalance'].errors?.['required']">
+              This is required.
+          </span>
+        </small>
+    </div>
+
+    <!-- my button component -->
+    <app-my-button btnType="submit" extraClasses="actionBtn" [disabled]="isLoading">
+        <span *ngIf="formType === 'add'">
+            Submit
+        </span>
+        <span *ngIf="formType !== 'add'">
+            Update
+        </span>
+        <app-small-spinner *ngIf="isLoading"></app-small-spinner>
+    </app-my-button>
+</form>
+
+<!-- <ng-template #demoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        <span *ngIf="formType === 'add'">
+            Customer account created!
+        </span>
+        <span *ngIf="formType !== 'add'">
+            Customer account updated!
+        </span>
+      </h4>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+            <span *ngIf="formType === 'add'">
+                Account no: {{accountNo}}
+            </span>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <app-my-button (btnClick)="modal.close('Save click')">
+            Close
+        </app-my-button>
+    </div>
+  </ng-template> -->

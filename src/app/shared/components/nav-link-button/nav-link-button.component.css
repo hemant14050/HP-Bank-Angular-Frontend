@@ -1,0 +1,10 @@
+.nav-link {
+    background-color: #1A6E90;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.nav-link:hover, .active-nav {
+    background-color: #0B375A;
+}

@@ -1,0 +1,30 @@
+<form #transactionForm="ngForm"
+  class="row g-3 needs-validation border p-3 mt-3 pt-0 mx-1"
+>
+    <div class="form-heading">
+        {{formType === 'Withdraw'? "Withdraw":"Deposit"}} Form:
+    </div>
+    <div class="col-md-4">
+      <label for="accountNo">Account No: </label>
+      <input type="number" class="form-control {{!transactionFormData.accountNo && submitBtnClicked && 'ng-invalid ng-touched'}}" id="accountNo" placeholder="Enter account no." [(ngModel)]="transactionFormData.accountNo" name="accountNo" />
+      <small class="text-danger" *ngIf="!transactionFormData.accountNo && submitBtnClicked">
+        This field is required.
+      </small>
+    </div>
+
+    <div class="col-md-4">
+        <label for="accountNo">Amount: </label>
+        <input type="number" class="form-control {{!transactionFormData.amount && submitBtnClicked && 'ng-invalid ng-touched'}}" id="amount" placeholder="Enter account no." [(ngModel)]="transactionFormData.amount" name="amount" />
+        <small class="text-danger" *ngIf="!transactionFormData.amount && submitBtnClicked">
+            This field is required.
+        </small>
+    </div>
+
+    <!-- Custom button component -->
+    <app-my-button btnType="button" (btnClick)="onSubmitHandler()" extraClasses="actionBtn" [disabled]="isLoading">
+        <span>
+            {{formType === 'Withdraw'? "Withdraw":"Deposit"}}
+        </span>
+        <app-small-spinner *ngIf="isLoading"></app-small-spinner>
+    </app-my-button>
+</form>
