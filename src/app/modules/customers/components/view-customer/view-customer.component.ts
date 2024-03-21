@@ -1,6 +1,7 @@
 import { CustomersService } from './../../services/customers.service';
 import { Component } from '@angular/core';
 import { CustomerDetails } from '../../interfaces/CustomerDetails';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-customer',
@@ -15,7 +16,7 @@ export class ViewCustomerComponent {
   isValid = true;
   submitBtnClicked:Boolean = false;
 
-  constructor(private customerService: CustomersService) {}
+  constructor(private customerService: CustomersService, private toastr: ToastrService) {}
 
   searchByAadhar(): void {
     this.submitBtnClicked = true;
@@ -24,20 +25,22 @@ export class ViewCustomerComponent {
     this.isLoading = true;
     this.customerService.getCustomerByAadharNo(this.aadharNo).subscribe(
       (data) => {
+        // console.log("Success: ", data);
+        this.isLoading = false;
         if(data.success) {
           this.currCustomerData = data.data;
-          // console.log(data.data);
+          // this.toastr.success(data.message);
         } else {
-          window.alert(data.message);
+          this.toastr.error(data.message);
         }
-        this.isLoading = false;
       },
       (err) => {
+        // console.log("Error--here: ", err);
         this.isLoading = false;
         if(err?.error?.message) {
-          window.alert(err?.error?.message);
+          this.toastr.error(err?.error?.message);
         } else {
-          window.alert(err.message);
+          this.toastr.error(err.message);
         }
       }
     );

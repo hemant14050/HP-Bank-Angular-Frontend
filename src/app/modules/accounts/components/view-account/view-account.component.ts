@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AccountsService } from '../../services/accounts.service';
 import { Account } from '../../interfaces/Account';
 import { CustomerDetails } from '../../../customers/interfaces/CustomerDetails';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-account',
@@ -14,7 +15,7 @@ export class ViewAccountComponent {
   isLoading = false;
   submitBtnClicked:Boolean = false;
 
-  constructor(private accountsService: AccountsService) {}
+  constructor(private accountsService: AccountsService, private toastr: ToastrService) {}
 
   searchByAccountNo(): void {
     this.submitBtnClicked = true;
@@ -23,20 +24,22 @@ export class ViewAccountComponent {
     this.isLoading = true;
     this.accountsService.getAccountById(this.accountNo).subscribe(
       (data) => {
+        // console.log("Success: ", data);
+        this.isLoading = false;
         if(data.success) {
           this.currCustomerData = data.data;
-          console.log(data.data);
+          // this.toastr.success(data.message);
         } else {
-          window.alert(data.message);
+          this.toastr.error(data.message);
         }
-        this.isLoading = false;
       },
       (err) => {
+        // console.log("Error--here: ", err);
         this.isLoading = false;
         if(err?.error?.message) {
-          window.alert(err?.error?.message);
+          this.toastr.error(err?.error?.message);
         } else {
-          window.alert(err.message);
+          this.toastr.error(err.message);
         }
       }
     );
@@ -49,16 +52,17 @@ export class ViewAccountComponent {
         // console.log("Success: ", data);
         if(data.success) {
           this.currCustomerData.isActive = data.data.isActive;
+          this.toastr.success(data.message);
         } else {
-          window.alert(data.message);
+          this.toastr.error(data.message);
         }
       },
       (err) => {
         // console.log("Error--here: ", err);
         if(err?.error?.message) {
-          window.alert(err?.error?.message);
+          this.toastr.error(err?.error?.message);
         } else {
-          window.alert(err?.message);
+          this.toastr.error(err.message);
         }
       }
     );

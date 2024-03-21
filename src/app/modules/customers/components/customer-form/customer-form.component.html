@@ -157,31 +157,3 @@
         <app-small-spinner *ngIf="isLoading"></app-small-spinner>
     </app-my-button>
 </form>
-
-<!-- <ng-template #demoModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        <span *ngIf="formType === 'add'">
-            Customer account created!
-        </span>
-        <span *ngIf="formType !== 'add'">
-            Customer account updated!
-        </span>
-      </h4>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-            <span *ngIf="formType === 'add'">
-                Account no: {{accountNo}}
-            </span>
-        </div>
-      </form>
-    </div>
-    <div class="modal-footer">
-        <app-my-button (btnClick)="modal.close('Save click')">
-            Close
-        </app-my-button>
-    </div>
-  </ng-template> -->

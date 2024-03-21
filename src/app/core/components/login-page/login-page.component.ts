@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-page',
@@ -14,7 +15,8 @@ export class LoginPageComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private authService: AuthService) {
+    private authService: AuthService,
+    private toastr: ToastrService) {
 
     if(this.authService.isLoggedIn()) {
       this.router.navigate(['/']);
@@ -39,16 +41,23 @@ export class LoginPageComponent implements OnInit {
     this.isLoading = true;
     this.authService.login(this.loginForm.value).subscribe(
       (data) => {
+        // console.log("Success: ", data);
+        this.isLoading = false;
         if(data.success) {
           this.router.navigate(['/']);
+          this.toastr.success(data.message);
         } else {
-          window.alert(data.message);
+          this.toastr.error(data.message);
         }
-        this.isLoading = false;
       },
       (err) => {
+        // console.log("Error--here: ", err);
         this.isLoading = false;
-        window.alert(err.message);
+        if(err?.error?.message) {
+          this.toastr.error(err?.error?.message);
+        } else {
+          this.toastr.error(err.message);
+        }
       }
     );
   }

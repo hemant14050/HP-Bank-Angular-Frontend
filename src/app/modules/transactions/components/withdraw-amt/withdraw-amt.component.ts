@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { TransactionFormModel } from '../../interfaces/Transaction';
 import { TrasactionsService } from '../../services/trasactions.service';
-import { MyModalComponent } from '../../../../shared/components/my-modal/my-modal.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-withdraw-amt',
@@ -10,42 +10,31 @@ import { MyModalComponent } from '../../../../shared/components/my-modal/my-moda
 })
 export class WithdrawAmtComponent {
   isLoading:boolean = false;
-  modalTitle!:string;
-  modalMessage!:string;
-  @ViewChild(MyModalComponent) myModal!:MyModalComponent;
 
-  constructor(private transactionService: TrasactionsService) {}
+  constructor(private transactionService: TrasactionsService, private toastr: ToastrService) {}
   
   formSubmitHandler(transactionFormData:TransactionFormModel): void {
     this.isLoading = true;
     this.transactionService.makeTransaction(transactionFormData).subscribe(
       (data) => {
-        console.log("Success: ", data);
-        if(data.success) {
-          this.modalTitle = "Success!";
-        } else {
-          this.modalTitle = "Failed!";
-        }
-        this.modalMessage = data.message;
+        // console.log("Success: ", data);
         this.isLoading = false;
-        this.myModal.openModal();
+        if(data.success) {
+          this.toastr.success(data.message);
+        } else {
+          this.toastr.error(data.message);
+        }
       },
       (err) => {
-        console.log("Error--here: ", err);
-        this.modalTitle = "Failed!";
-        if(err.error.message) {
-          this.modalMessage = err.error.message;
-        } else {
-          this.modalMessage = err.message;
-        }
+        // console.log("Error--here: ", err);
         this.isLoading = false;
-        this.myModal.openModal();
+        if(err?.error?.message) {
+          this.toastr.error(err?.error?.message);
+        } else {
+          this.toastr.error(err.message);
+        }
       }
     );
-    // console.log("Withdraw from: ", transactionFormData);
-    // setTimeout(()=> {
-    //   this.isLoading = false;
-    // }, 3000);
   }
 
 }

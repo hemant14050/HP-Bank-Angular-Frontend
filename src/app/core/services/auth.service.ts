@@ -2,14 +2,14 @@ import { ResponseModel } from './../../shared/interfaces/ResponseModel';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, delay, of, tap } from 'rxjs';
-import { LoginModel } from '../Interfaces/LoginModel';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private toastr: ToastrService) { }
 
   isLoggedIn(): boolean {
     if(localStorage.getItem("isLoggedIn") && localStorage.getItem("userData")) {
@@ -51,5 +51,6 @@ export class AuthService {
     localStorage.removeItem("userData");
 
     this.router.navigate(['login']);
+    this.toastr.success("Logged out successfully!");
   }
 }
