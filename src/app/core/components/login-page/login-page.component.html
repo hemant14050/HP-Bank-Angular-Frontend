@@ -1,7 +1,7 @@
 
 <div class="col-md-6 offset-md-3 mt-5">
     <div class="alert alert-info">
-        Email: admin&#64;gmail.com<br />
+        Username: admin&#64;gmail.com<br />
         Password: admin&#64;123
     </div>
     <div class="card">
@@ -12,10 +12,10 @@
             (ngSubmit)="loginFormHandler()"
             >
                 <div class="mb-3">
-                    <label class="form-label" for="email">Email: </label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email id" formControlName ="email"/>
-                    <small class="text-danger" *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
-                      <span *ngIf="loginForm.controls['email'].errors?.['required']">
+                    <label class="form-label" for="username">Username: </label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username" formControlName ="username"/>
+                    <small class="text-danger" *ngIf="loginForm.controls['username'].invalid && loginForm.controls['username'].touched">
+                      <span *ngIf="loginForm.controls['username'].errors?.['required']">
                           This is required.
                       </span>
                     </small>

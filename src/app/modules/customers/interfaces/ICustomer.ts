@@ -1,4 +1,4 @@
-export interface Customer {
+export interface ICustomer {
   customerId: number;
   firstName: string;
   lastName: string;
@@ -13,7 +13,7 @@ export interface Customer {
   zip: number;
 }
 
-export interface CustomerInputFields {
+export interface ICustomerInputFields {
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -29,7 +29,7 @@ export interface CustomerInputFields {
   openingBalance?: number;
 }
 
-export interface CustomerUpdateFields {
+export interface ICustomerUpdateFields {
   firstName?: string;
   lastName?: string;
   email?: string;

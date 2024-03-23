@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Transaction } from '../../interfaces/Transaction';
+import { ITransaction } from '../../interfaces/ITransaction';
 
 const transactionsTableTitles:Array<string> = [
   "Transaction  Id",
@@ -18,6 +18,6 @@ const transactionsTableTitles:Array<string> = [
 export class TransactionsTblComponent {
   transactionsTableTitles:Array<string> = transactionsTableTitles;
   @Input() isLoading: boolean = false;
-  @Input() transactionsList: Array<Transaction> = [];
+  @Input() transactionsList: Array<ITransaction> = [];
   
 }

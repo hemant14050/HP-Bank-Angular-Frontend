@@ -1,8 +1,9 @@
-import { CustomerDetails } from './../../interfaces/CustomerDetails';
+import { ICustomerDetails } from '../../interfaces/ICustomerDetails';
 import { CustomersService } from './../../services/customers.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CustomerInputFields } from '../../interfaces/Customer';
+import { ICustomerInputFields } from '../../interfaces/ICustomer';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 const custTableTitles: string[] = [
   "Action",
@@ -32,29 +33,32 @@ const custTableTitles: string[] = [
 })
 export class ViewAllCustomersComponent implements OnInit {
   custTableTitles:string[] = custTableTitles;
-  customersList!:Array<CustomerDetails>;
+  customersList!:Array<ICustomerDetails>;
   isLoading:boolean = false;
-  cust: CustomerInputFields = {} as CustomerInputFields;
+  cust: ICustomerInputFields = {} as ICustomerInputFields;
 
-  constructor(private customersService: CustomersService, private router: Router){}
+  constructor(private customersService: CustomersService, private router: Router, private toastr: ToastrService){}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.customersService.getAllCustomers().subscribe(
-      data => {
+      (data) => {
+        // console.log("Success: ", data);
+        this.isLoading = false;
         if(data.success) {
           this.customersList = data.data;
+          // this.toastr.success(data.message);
         } else {
-          console.log("Error: ", data.message);
+          this.toastr.error(data.message);
         }
-        this.isLoading = false;
       },
       (err) => {
+        // console.log("Error--here: ", err);
         this.isLoading = false;
         if(err?.error?.message) {
-          window.alert(err?.error?.message);
+          this.toastr.error(err?.error?.message);
         } else {
-          window.alert(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );
@@ -63,21 +67,23 @@ export class ViewAllCustomersComponent implements OnInit {
   deleteCustomerById(customerId: number): void {
     if(!customerId) return;
     this.customersService.deleteCustomerById(customerId).subscribe(
-      data => {
-        if(data.success) {
-          this.customersList = this.customersList.filter(cust => cust.customerId != data.data.customerId)
-        } else {
-          console.log("Error: ", data.message);
+        (data) => {
+            // console.log("Success: ", data);
+            if(data.success) {
+              this.customersList = this.customersList.filter(cust => cust.customerId != data.data.customerId)
+              this.toastr.success(data.message);
+            } else {
+              this.toastr.error(data.message);
+            }
+        },
+        (err) => {
+            // console.log("Error--here: ", err);
+            if(err?.error?.message) {
+              this.toastr.error(err?.error?.message);
+            } else {
+              this.toastr.error(err.message);
+            }
         }
-      },
-      (err) => {
-        // console.log(err);
-        if(err?.error?.message) {
-          window.alert(err?.error?.message);
-        } else {
-          window.alert(err.message);
-        }
-      }
     );
   }
 

@@ -1,5 +1,5 @@
 import { MyModalComponent } from '../../../../shared/components/my-modal/my-modal.component';
-import { CustomerDetails } from '../../interfaces/CustomerDetails';
+import { ICustomerDetails } from '../../interfaces/ICustomerDetails';
 import { CustomerFormComponent } from '../customer-form/customer-form.component';
 import { CustomersService } from './../../services/customers.service';
 import { Component, ViewChild } from '@angular/core';
@@ -10,7 +10,7 @@ import { Component, ViewChild } from '@angular/core';
   styleUrl: './add-customer.component.css'
 })
 export class AddCustomerComponent {
-  newCustomerData!:CustomerDetails;
+  newCustomerData!:ICustomerDetails;
   isLoading:boolean = false;
   modalTitle!:string;
   modalMessage!:string;
@@ -43,7 +43,7 @@ export class AddCustomerComponent {
         if(err?.error?.message) {
           this.modalMessage = err?.error?.message;
         } else {
-          this.modalMessage = err?.message;
+          this.modalMessage = err?.statusText;
         }
         this.myModal.openModal();
       }

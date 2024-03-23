@@ -1,4 +1,4 @@
-export interface Account {
+export interface IAccount {
     "accountNo": number,
     "customerId": number,
     "accountTypeId": number,

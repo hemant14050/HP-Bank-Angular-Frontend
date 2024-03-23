@@ -1,55 +1,47 @@
-import { ResponseModel } from './../../shared/interfaces/ResponseModel';
+import { IResponseModel } from './../../shared/interfaces/IResponseModel';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, delay, of, tap } from 'rxjs';
-import { LoginModel } from '../Interfaces/LoginModel';
+import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { HttpClient } from '@angular/common/http';
+import { APP_BASE_URL } from '../../app-base-url';
+import { ILoginModel } from '../Interfaces/ILoginModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) { }
 
   isLoggedIn(): boolean {
-    if(localStorage.getItem("isLoggedIn") && localStorage.getItem("userData")) {
+    if(localStorage.getItem("myToken") && localStorage.getItem("userData")) {
       return true;
     }
     return false;
   }
 
-  login({email, password}: any): Observable<any> {
-    if(email === "admin@gmail.com" && password === "admin@123") {
-      const response: ResponseModel<any> = {
-        success: true,
-        message: "Login successfully!",
-        data: {name: "Admin - HPBank", email: "admin@gmail.com"}
-      };
+  setUser(userData: any): void {
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
 
-      return of(response).pipe(
-        delay(3000),
-        tap(() => {
-          localStorage.setItem("isLoggedIn", JSON.stringify(true));
-          localStorage.setItem("userData", JSON.stringify(response.data));
-        })
-      );
-    }
-    const response: ResponseModel<any> = {
-      success: false,
-      message: "Invalid credentials. Login failed!",
-      data: null
-    };
+  setToken(token: string): void {
+    localStorage.setItem("myToken", token);
+  }
 
-    return of(response).pipe(
-      delay(2000),
-      tap(() => this.logout())
-    );
+  getToken(): any {
+    return localStorage.getItem("myToken");
+  }
+
+  login({username, password}: ILoginModel): Observable<IResponseModel<any>> {
+    return this.http.post<IResponseModel<any>>(`${APP_BASE_URL}/auth/login`, {username, password});
   }
 
   logout(): void {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("myToken");
     localStorage.removeItem("userData");
 
     this.router.navigate(['login']);
+    this.toastr.success("Logged out successfully!");
   }
 }

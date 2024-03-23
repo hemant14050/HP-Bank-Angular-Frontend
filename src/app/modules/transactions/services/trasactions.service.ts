@@ -1,9 +1,9 @@
-import { TransactionFormModel } from './../interfaces/Transaction';
+import { ITransactionFormModel } from '../interfaces/ITransaction';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseModel } from '../../../shared/interfaces/ResponseModel';
-import { Transaction } from '../interfaces/Transaction';
+import { IResponseModel } from '../../../shared/interfaces/IResponseModel';
+import { ITransaction } from '../interfaces/ITransaction';
 import { APP_BASE_URL } from '../../../app-base-url';
 
 @Injectable({
@@ -13,15 +13,15 @@ export class TrasactionsService {
 
   constructor(private http: HttpClient) { }
 
-  getAllTransactions(): Observable<ResponseModel<Array<Transaction>>> {
-    return this.http.get<ResponseModel<Array<Transaction>>>(`${APP_BASE_URL}/transactions`);
+  getAllTransactions(): Observable<IResponseModel<Array<ITransaction>>> {
+    return this.http.get<IResponseModel<Array<ITransaction>>>(`${APP_BASE_URL}/transactions`);
   }
 
-  getTransactionsByAccNo(accountNo: number): Observable<ResponseModel<Array<Transaction>>> {
-    return this.http.get<ResponseModel<Array<Transaction>>>(`${APP_BASE_URL}/transactions/getByAccountNo/${accountNo}`);
+  getTransactionsByAccNo(accountNo: number): Observable<IResponseModel<Array<ITransaction>>> {
+    return this.http.get<IResponseModel<Array<ITransaction>>>(`${APP_BASE_URL}/transactions/getByAccountNo/${accountNo}`);
   }
 
-  makeTransaction(transactionFormData:TransactionFormModel): Observable<ResponseModel<Array<Transaction>>> {
-    return this.http.post<ResponseModel<Array<Transaction>>>(`${APP_BASE_URL}/transactions/makeTransaction`, transactionFormData);
+  makeTransaction(transactionFormData:ITransactionFormModel): Observable<IResponseModel<Array<ITransaction>>> {
+    return this.http.post<IResponseModel<Array<ITransaction>>>(`${APP_BASE_URL}/transactions/makeTransaction`, transactionFormData);
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AccountsService } from '../../services/accounts.service';
-import { InterestRate } from '../../interfaces/InterestRate';
+import { IInterestRate } from '../../interfaces/IInterestRate';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-interest-rate',
@@ -10,29 +11,32 @@ import { InterestRate } from '../../interfaces/InterestRate';
 export class InterestRateComponent {
   isLoading:boolean = false;
   accountTypeId:number = 0;
-  interestRate!:InterestRate;
+  interestRate!:IInterestRate;
 
-  constructor(private accountService: AccountsService) {}
+  constructor(private accountService: AccountsService, private toastr: ToastrService) {}
 
   submitHandler(): void {
+    if(this.accountTypeId != 1 && this.accountTypeId != 2) { return; }
+
     this.isLoading = true;
     this.accountService.getInterestRate(this.accountTypeId).subscribe(
       (data) => {
-        // console.log(data);
+        // console.log("Success: ", data);
+        this.isLoading = false;
         if(data.success) {
           this.interestRate = data.data;
+          // this.toastr.success(data.message);
         } else {
-          window.alert(data.message);
+          this.toastr.error(data.message);
         }
-        this.isLoading = false;
       },
       (err) => {
-        // console.log(err);
+        // console.log("Error--here: ", err);
         this.isLoading = false;
         if(err?.error?.message) {
-          window.alert(err?.error?.message);
+          this.toastr.error(err?.error?.message);
         } else {
-          window.alert(err?.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

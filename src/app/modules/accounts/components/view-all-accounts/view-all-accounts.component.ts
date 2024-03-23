@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountsService } from '../../services/accounts.service';
-import { Account } from '../../interfaces/Account';
+import { IAccount } from '../../interfaces/IAccount';
+import { ToastrService } from 'ngx-toastr';
 
 const accountTableTitles:Array<String>  = [
   "Account No",
@@ -18,32 +19,33 @@ const accountTableTitles:Array<String>  = [
   styleUrl: './view-all-accounts.component.css'
 })
 export class ViewAllAccountsComponent implements OnInit {
-  accountsList:Array<Account> = [];
+  accountsList:Array<IAccount> = [];
   isLoading:boolean = false;
   accountTableTitles:Array<String> = accountTableTitles;
 
-  constructor(private accountsService: AccountsService) { }
+  constructor(private accountsService: AccountsService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
     this.accountsService.getAllAccounts().subscribe(
       (data) => {
         // console.log("Success: ", data);
+        this.isLoading = false;
         if(data.success) {
           this.accountsList = data.data;
+          // this.toastr.success(data.message);
         } else {
-          window.alert(data.message);
+          this.toastr.error(data.message);
         }
-        this.isLoading = false;
       },
       (err) => {
-        console.log("Error--here: ", err);
-        if(err?.error?.message) {
-          window.alert(err.error.message);
-        } else {
-          window.alert(err?.message);
-        }
+        // console.log("Error--here: ", err);
         this.isLoading = false;
+        if(err?.error?.message) {
+          this.toastr.error(err?.error?.message);
+        } else {
+          this.toastr.error(err.statusText);
+        }
       }
     );
   }
@@ -61,16 +63,17 @@ export class ViewAllAccountsComponent implements OnInit {
               return acc;
             }
           });
+          this.toastr.success(data.message);
         } else {
-          window.alert(data.message);
+          this.toastr.error(data.message);
         }
       },
       (err) => {
         // console.log("Error--here: ", err);
         if(err?.error?.message) {
-          window.alert(err?.error?.message);
+          this.toastr.error(err?.error?.message);
         } else {
-          window.alert(err?.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

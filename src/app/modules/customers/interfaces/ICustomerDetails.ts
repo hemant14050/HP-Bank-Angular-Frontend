@@ -1,4 +1,4 @@
-export interface CustomerDetails {
+export interface ICustomerDetails {
     customerId: number;
     firstName: string;
     lastName: string;
