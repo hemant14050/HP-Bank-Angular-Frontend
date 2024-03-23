@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TransactionFormModel } from '../../interfaces/Transaction';
+import { ITransactionFormModel } from '../../interfaces/ITransaction';
 import { TrasactionsService } from '../../services/trasactions.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,7 +13,7 @@ export class DepositAmtComponent {
 
   constructor(private transactionService: TrasactionsService, private toastr:ToastrService) {}
 
-  formSubmitHandler(transactionFormData:TransactionFormModel): void {
+  formSubmitHandler(transactionFormData:ITransactionFormModel): void {
     // console.log("Deposit from: ", transactionFormData);
     this.isLoading = true;
     this.transactionService.makeTransaction(transactionFormData).subscribe(
@@ -32,7 +32,7 @@ export class DepositAmtComponent {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

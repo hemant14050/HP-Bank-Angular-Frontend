@@ -21,11 +21,11 @@ export class LoginPageComponent implements OnInit {
     if(this.authService.isLoggedIn()) {
       this.router.navigate(['/']);
     }
-  }
+  } 
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     });
   }
@@ -41,9 +41,12 @@ export class LoginPageComponent implements OnInit {
     this.isLoading = true;
     this.authService.login(this.loginForm.value).subscribe(
       (data) => {
-        // console.log("Success: ", data);
+        console.log("Success: ", data);
         this.isLoading = false;
         if(data.success) {
+          this.authService.setToken(data.data.token);
+          this.authService.setUser(data.data);
+
           this.router.navigate(['/']);
           this.toastr.success(data.message);
         } else {
@@ -56,7 +59,7 @@ export class LoginPageComponent implements OnInit {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

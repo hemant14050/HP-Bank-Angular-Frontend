@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AccountsService } from '../../services/accounts.service';
-import { Account } from '../../interfaces/Account';
-import { CustomerDetails } from '../../../customers/interfaces/CustomerDetails';
+import { ICustomerDetails } from '../../../customers/interfaces/ICustomerDetails';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -10,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './view-account.component.css'
 })
 export class ViewAccountComponent {
-  currCustomerData!:CustomerDetails;
+  currCustomerData!:ICustomerDetails;
   accountNo!:number;
   isLoading = false;
   submitBtnClicked:Boolean = false;
@@ -39,7 +38,7 @@ export class ViewAccountComponent {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );
@@ -62,7 +61,7 @@ export class ViewAccountComponent {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

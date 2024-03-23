@@ -1,6 +1,6 @@
 import { TrasactionsService } from './../../services/trasactions.service';
 import { Component } from '@angular/core';
-import { Transaction } from '../../interfaces/Transaction';
+import { ITransaction } from '../../interfaces/ITransaction';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ViewTransactionComponent {
   isLoading:boolean = false;
-  transactionsList: Array<Transaction> = [];
+  transactionsList: Array<ITransaction> = [];
   accountNo!:number;
   submitBtnClicked:boolean = false;
 
@@ -39,7 +39,7 @@ export class ViewTransactionComponent {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

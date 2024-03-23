@@ -1,4 +1,4 @@
-export interface Transaction {
+export interface ITransaction {
     "transactionId": 1,
     "accountNo": number,
     "transactionType": string,
@@ -7,7 +7,7 @@ export interface Transaction {
     "createdAt": Date
 }
 
-export interface TransactionFormModel {
+export interface ITransactionFormModel {
     "accountNo"?: number,
     "transactionType": string,
     "amount"?: number

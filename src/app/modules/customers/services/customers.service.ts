@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResponseModel } from '../../../shared/interfaces/ResponseModel';
-import { CustomerDetails } from '../interfaces/CustomerDetails';
-import { Customer, CustomerInputFields, CustomerUpdateFields } from '../interfaces/Customer';
+import { IResponseModel } from '../../../shared/interfaces/IResponseModel';
+import { ICustomerDetails } from '../interfaces/ICustomerDetails';
+import { ICustomer, ICustomerInputFields, ICustomerUpdateFields } from '../interfaces/ICustomer';
 import { APP_BASE_URL } from '../../../app-base-url';
 
 @Injectable({
@@ -13,29 +13,29 @@ export class CustomersService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCustomers():Observable<ResponseModel<Array<CustomerDetails>>> {
-    return this.http.get<ResponseModel<Array<CustomerDetails>>>(`${APP_BASE_URL}/customers`);
+  getAllCustomers():Observable<IResponseModel<Array<ICustomerDetails>>> {
+    return this.http.get<IResponseModel<Array<ICustomerDetails>>>(`${APP_BASE_URL}/customers`);
   }
 
-  deleteCustomerById(customerId:number): Observable<ResponseModel<Customer>> {
-    return this.http.delete<ResponseModel<Customer>>(`${APP_BASE_URL}/customers/${customerId}`);
+  deleteCustomerById(customerId:number): Observable<IResponseModel<ICustomer>> {
+    return this.http.delete<IResponseModel<ICustomer>>(`${APP_BASE_URL}/customers/${customerId}`);
   }
 
-  addCustomer(customerFormData:CustomerInputFields): Observable<ResponseModel<CustomerDetails>> {
+  addCustomer(customerFormData:ICustomerInputFields): Observable<IResponseModel<ICustomerDetails>> {
     // console.log(customerFormData);
-    return this.http.post<ResponseModel<CustomerDetails>>(`${APP_BASE_URL}/customers`, customerFormData);
+    return this.http.post<IResponseModel<ICustomerDetails>>(`${APP_BASE_URL}/customers`, customerFormData);
   }
 
-  updateCustomer(customerId:number, customerFormData:CustomerUpdateFields): Observable<ResponseModel<CustomerDetails>> {
+  updateCustomer(customerId:number, customerFormData:ICustomerUpdateFields): Observable<IResponseModel<ICustomerDetails>> {
     // console.log(customerFormData);
-    return this.http.patch<ResponseModel<CustomerDetails>>(`${APP_BASE_URL}/customers/${customerId}`, customerFormData);
+    return this.http.patch<IResponseModel<ICustomerDetails>>(`${APP_BASE_URL}/customers/${customerId}`, customerFormData);
   }
 
-  getCustomerById(customerId: number): Observable<ResponseModel<CustomerDetails>> {
-    return this.http.get<ResponseModel<CustomerDetails>>(`${APP_BASE_URL}/customers/${customerId}`);
+  getCustomerById(customerId: number): Observable<IResponseModel<ICustomerDetails>> {
+    return this.http.get<IResponseModel<ICustomerDetails>>(`${APP_BASE_URL}/customers/${customerId}`);
   }
 
-  getCustomerByAadharNo(aadharNo: string): Observable<ResponseModel<CustomerDetails>> {
-    return this.http.get<ResponseModel<CustomerDetails>>(`${APP_BASE_URL}/customers/customer?aadharNo=${aadharNo}`);
+  getCustomerByAadharNo(aadharNo: string): Observable<IResponseModel<ICustomerDetails>> {
+    return this.http.get<IResponseModel<ICustomerDetails>>(`${APP_BASE_URL}/customers/customer?aadharNo=${aadharNo}`);
   }
 }

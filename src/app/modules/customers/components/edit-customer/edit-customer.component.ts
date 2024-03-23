@@ -1,4 +1,5 @@
-import { CustomerDetails } from './../../interfaces/CustomerDetails';
+import { ToastrService } from 'ngx-toastr';
+import { ICustomerDetails } from '../../interfaces/ICustomerDetails';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CustomerFormComponent } from '../customer-form/customer-form.component';
 import { CustomersService } from '../../services/customers.service';
@@ -11,14 +12,14 @@ import { MyModalComponent } from '../../../../shared/components/my-modal/my-moda
   styleUrl: './edit-customer.component.css'
 })
 export class EditCustomerComponent implements OnInit {
-  currCustomerData!:CustomerDetails;
+  currCustomerData!:ICustomerDetails;
   modalTitle!:string;
   modalMessage!:string;
   @ViewChild(MyModalComponent) myModal!:MyModalComponent;
   @ViewChild(CustomerFormComponent) customerFormComponent!: CustomerFormComponent;
   isLoading:boolean = false;
 
-  constructor(private customersService: CustomersService, private activatedRoute: ActivatedRoute){}
+  constructor(private customersService: CustomersService, private activatedRoute: ActivatedRoute, private toastr:ToastrService){}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -26,12 +27,20 @@ export class EditCustomerComponent implements OnInit {
       // console.log('Customer ID:', customerId);
       this.customersService.getCustomerById(customerId).subscribe(
         data => {
-          this.currCustomerData = data.data;
+          if(data.success) {
+            this.currCustomerData = data.data;
+          } else {
+            this.toastr.warning(data.message);
+          }
           // console.log(data);
         },
         (err) => {
-          console.log("Error --> ", err);
-          window.alert(err.message);
+          // console.log("Error --> ", err);
+          if(err?.error?.message) {
+            this.toastr.warning(err?.error?.message);
+          } else {
+            this.toastr.error(err.statusText);
+          }
         }
       );
     });
@@ -61,7 +70,7 @@ export class EditCustomerComponent implements OnInit {
         if(err?.error?.message) {
           this.modalMessage = err?.error?.message;
         } else {
-          this.modalMessage = err?.message;
+          this.modalMessage = err?.statusText;
         }
         this.myModal.openModal();
       }

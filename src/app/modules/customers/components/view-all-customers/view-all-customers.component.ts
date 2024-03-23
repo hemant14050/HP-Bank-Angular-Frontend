@@ -1,7 +1,7 @@
-import { CustomerDetails } from './../../interfaces/CustomerDetails';
+import { ICustomerDetails } from '../../interfaces/ICustomerDetails';
 import { CustomersService } from './../../services/customers.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CustomerInputFields } from '../../interfaces/Customer';
+import { ICustomerInputFields } from '../../interfaces/ICustomer';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -33,9 +33,9 @@ const custTableTitles: string[] = [
 })
 export class ViewAllCustomersComponent implements OnInit {
   custTableTitles:string[] = custTableTitles;
-  customersList!:Array<CustomerDetails>;
+  customersList!:Array<ICustomerDetails>;
   isLoading:boolean = false;
-  cust: CustomerInputFields = {} as CustomerInputFields;
+  cust: ICustomerInputFields = {} as ICustomerInputFields;
 
   constructor(private customersService: CustomersService, private router: Router, private toastr: ToastrService){}
 
@@ -58,7 +58,7 @@ export class ViewAllCustomersComponent implements OnInit {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

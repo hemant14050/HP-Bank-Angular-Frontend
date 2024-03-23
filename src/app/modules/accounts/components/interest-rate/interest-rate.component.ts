@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AccountsService } from '../../services/accounts.service';
-import { InterestRate } from '../../interfaces/InterestRate';
+import { IInterestRate } from '../../interfaces/IInterestRate';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class InterestRateComponent {
   isLoading:boolean = false;
   accountTypeId:number = 0;
-  interestRate!:InterestRate;
+  interestRate!:IInterestRate;
 
   constructor(private accountService: AccountsService, private toastr: ToastrService) {}
 
@@ -36,7 +36,7 @@ export class InterestRateComponent {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

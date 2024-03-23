@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountsService } from '../../services/accounts.service';
-import { Account } from '../../interfaces/Account';
+import { IAccount } from '../../interfaces/IAccount';
 import { ToastrService } from 'ngx-toastr';
 
 const accountTableTitles:Array<String>  = [
@@ -19,7 +19,7 @@ const accountTableTitles:Array<String>  = [
   styleUrl: './view-all-accounts.component.css'
 })
 export class ViewAllAccountsComponent implements OnInit {
-  accountsList:Array<Account> = [];
+  accountsList:Array<IAccount> = [];
   isLoading:boolean = false;
   accountTableTitles:Array<String> = accountTableTitles;
 
@@ -44,7 +44,7 @@ export class ViewAllAccountsComponent implements OnInit {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );
@@ -73,7 +73,7 @@ export class ViewAllAccountsComponent implements OnInit {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

@@ -1,6 +1,6 @@
 import { CustomersService } from './../../services/customers.service';
 import { Component } from '@angular/core';
-import { CustomerDetails } from '../../interfaces/CustomerDetails';
+import { ICustomerDetails } from '../../interfaces/ICustomerDetails';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './view-customer.component.css'
 })
 export class ViewCustomerComponent {
-  currCustomerData!:CustomerDetails;
+  currCustomerData!:ICustomerDetails;
   aadharNo!:string;
   aadharNoRegex = new RegExp("^[0-9]{12}$");
   isLoading = false;
@@ -40,7 +40,7 @@ export class ViewCustomerComponent {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

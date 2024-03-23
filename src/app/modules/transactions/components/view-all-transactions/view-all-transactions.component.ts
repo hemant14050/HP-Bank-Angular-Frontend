@@ -1,5 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { Transaction } from '../../interfaces/Transaction';
+import { ITransaction } from '../../interfaces/ITransaction';
 import { TrasactionsService } from './../../services/trasactions.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -10,7 +10,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class ViewAllTransactionsComponent implements OnInit {
   isLoading:boolean = false;
-  transactionsList!:Array<Transaction>;
+  transactionsList!:Array<ITransaction>;
 
   constructor(private trasactionsService: TrasactionsService, private toastr:ToastrService) { }
 
@@ -33,7 +33,7 @@ export class ViewAllTransactionsComponent implements OnInit {
         if(err?.error?.message) {
           this.toastr.error(err?.error?.message);
         } else {
-          this.toastr.error(err.message);
+          this.toastr.error(err.statusText);
         }
       }
     );

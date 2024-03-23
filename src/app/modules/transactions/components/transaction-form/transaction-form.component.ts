@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TransactionFormModel } from '../../interfaces/Transaction';
+import { ITransactionFormModel } from '../../interfaces/ITransaction';
 
 @Component({
   selector: 'app-transaction-form',
@@ -8,8 +8,8 @@ import { TransactionFormModel } from '../../interfaces/Transaction';
 })
 export class TransactionFormComponent implements OnInit {
   @Input({required:true}) formType!:string;
-  transactionFormData!: TransactionFormModel;
-  @Output() formSubmit: EventEmitter<TransactionFormModel> = new EventEmitter<TransactionFormModel>();
+  transactionFormData!: ITransactionFormModel;
+  @Output() formSubmit: EventEmitter<ITransactionFormModel> = new EventEmitter<ITransactionFormModel>();
   submitBtnClicked:boolean = false;
   @Input() isLoading!:boolean;
 

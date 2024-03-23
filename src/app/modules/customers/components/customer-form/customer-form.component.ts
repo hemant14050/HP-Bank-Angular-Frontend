@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CustomerDetails } from '../../interfaces/CustomerDetails';
+import { ICustomerDetails } from '../../interfaces/ICustomerDetails';
 import { format } from 'date-fns';
 
 @Component({
@@ -12,7 +12,7 @@ export class CustomerFormComponent implements OnInit {
   @Input({required: true}) formTitle: string = '';
   @Input() formType: string = 'add';
   @Output() formSubmit: EventEmitter<any> = new EventEmitter<any>();
-  @Input() customerFormData!:CustomerDetails;
+  @Input() customerFormData!:ICustomerDetails;
   @Input() isLoading:boolean = false;
 
   customerForm!: FormGroup;
